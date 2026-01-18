@@ -1,0 +1,466 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #333;
+    min-height: 100vh;
+}
+
+#fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    /* Keep it mostly opaque white */
+    backdrop-filter: blur(10px);
+    padding-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-top: 30px;
+    font-weight: 600;
+    color: #2c3e50;
+    /* Back to dark text */
+    text-shadow: none;
+    /* Remove shadow */
+    background: white;
+    display: inline-block;
+    padding: 10px 30px;
+    border-radius: 50px;
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); Removed for transparency */
+}
+
+
+
+/* Slideshow CSS Removed */
+
+/* Slideshow Fade Removed */
+
+.album {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 50px auto 50px;
+    /* Adjusted top margin since book is now above */
+}
+
+.photo-card {
+    background: white;
+    border-radius: 5px;
+    /* Less rounded for Polaroid look */
+    overflow: visible;
+    /* Needed for pin to stick out */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    padding: 10px 10px 30px 10px;
+    /* Polaroid padding */
+    transform-origin: center top;
+    opacity: 0;
+    /* Hidden until animation starts */
+}
+
+/* Pin Effect */
+.photo-card::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #c0392b);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+/* Falling Animation Trigger */
+.album.visible .photo-card {
+    animation: dropIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Staggered Delays & Random Rotations */
+/* Controlled via JS for dynamic items */
+
+.photo-card:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    z-index: 5;
+}
+
+.photo-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+
+@keyframes dropIn {
+    from {
+        opacity: 0;
+        transform: translateY(-100vh) rotate(0deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) rotate(var(--rot));
+    }
+}
+
+
+
+.caption {
+    padding: 15px;
+    color: #444;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Modal Styles - Improved */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    /* Higher than welcome */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal img {
+    max-width: 90%;
+    max-height: 85vh;
+    border-radius: 10px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease-out;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+    background: rgba(0, 0, 0, 0.5);
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.close:hover {
+    color: #ff6b6b;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Welcome Popup Styles */
+.welcome-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Removed default background to use pseudo-element */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    animation: fadeIn 0.5s ease-out;
+    overflow: hidden;
+}
+
+/* Background Image with Blur */
+.welcome-modal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/image1.jpeg') no-repeat center center/cover;
+    filter: blur(8px) brightness(0.6);
+    z-index: -1;
+    transform: scale(1.1);
+    /* Prevent blur edges */
+}
+
+.welcome-content {
+    background: rgba(255, 255, 255, 0.85);
+    /* Slightly more transparent */
+    backdrop-filter: blur(10px);
+    /* Glass effect on the card itself */
+    padding: 50px 30px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    max-width: 90%;
+    width: 380px;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-img-container {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid white;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.welcome-content h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.welcome-content p {
+    color: #7f8c8d;
+    margin-bottom: 35px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.ok-btn {
+    padding: 14px 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+    letter-spacing: 0.5px;
+}
+
+.ok-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(118, 75, 162, 0.5);
+    filter: brightness(1.1);
+}
+
+.ok-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .album {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .welcome-content {
+        padding: 40px 20px;
+        width: 85%;
+    }
+
+    .close {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 28px;
+    }
+}
+
+/* 3D Book Styles */
+.book-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1500px;
+    margin: 300px auto 50px;
+    /* Top margin to clear header */
+    padding-bottom: 50px;
+}
+
+.book {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    /* Prevent it from getting too wide on desktop */
+    height: 500px;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: top;
+    /* Changed from left to top for vertical flip */
+    transition: transform 2.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.front,
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.front {
+    z-index: 2;
+    transform: translateZ(1px);
+    /* Prevent z-fighting */
+    background: linear-gradient(to bottom, #eee 0%, #fff 10%, #fff 100%);
+    /* Vertical Gradient */
+}
+
+.back {
+    z-index: 1;
+    transform: rotateX(180deg) translateZ(1px);
+    /* RotateX + translateZ */
+    background: linear-gradient(to top, #eee 0%, #fff 10%, #fff 100%);
+    /* Vertical Gradient */
+}
+
+.page-content {
+    text-align: center;
+    padding: 20px;
+    border: 2px solid #f0f0f0;
+    width: 85%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.page-content h2 {
+    font-family: 'Playfair Display', serif;
+    /* Or system serif */
+    color: #444;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.page-content p {
+    font-family: 'Poppins', sans-serif;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Page Stacking & Flipping Logic */
+#p1 {
+    z-index: 3;
+}
+
+#p2 {
+    z-index: 2;
+}
+
+#p3 {
+    z-index: 1;
+}
+
+.page.flipped {
+    transform: rotateX(180deg);
+    /* Positive for Flip From Front */
+}
+
+/* Fix visibility on flip */
+.page.flipped .front {
+    z-index: 0;
+}
+
+.page.flipped .back {
+    z-index: 10;
+}
+
+/* Make book look thicker */
+.book::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: -1;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+}

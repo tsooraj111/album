@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Beautiful Photo Album</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header id="fixed-header">
+        <h1>📸 My Beautiful Photo Album</h1>
+
+        <!-- Slideshow Removed -->
+        <br>
+
+
+    </header>
+
+    <!-- 3D Book Section -->
+    <div class="book-container">
+        <div class="book">
+            <!-- Page 1 -->
+            <div class="page" id="p1">
+                <div class="front">
+                    <div class="page-content">
+                        <h2>My Story</h2>
+                        <p>Welcome to the memories.</p>
+                        <p>Click to open &#8593;</p>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="page-content">
+                        <!-- Blank -->
+                    </div>
+                </div>
+            </div>
+            <!-- Page 2 -->
+            <div class="page" id="p2">
+                <div class="front">
+                    <div class="page-content">
+                        <h2>Name: Shilpi Priya</h2>
+                        <h2>Age: <span id="calculated-age"></span></h2>
+                        <h2>Place: Hazharibagh, Jharkhand.</h2>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="page-content">
+                        <!-- Blank -->
+                    </div>
+                </div>
+            </div>
+            <!-- Page 3 -->
+            <div class="page" id="p3">
+                <div class="front">
+                    <div class="page-content">
+                        <h2>The End</h2>
+                        <p>Come Again!</p>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="page-content">
+                        <!-- Blank -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="album" id="album-grid">
+        <!-- Photo cards will be injected here -->
+    </div>
+
+    <!-- Modal popup -->
+    <div id="photoModal" class="modal">
+        <span class="close" onclick="closeModal()">✖</span>
+        <img id="modalImg">
+    </div>
+
+    <!-- Welcome Popup -->
+    <div id="welcomeModal" class="welcome-modal">
+        <div class="welcome-content">
+            <div class="profile-img-container">
+                <img src="images/image2.jpeg" alt="Welcome" class="profile-img">
+            </div>
+            <h2>Welcome to Shilpi's Album!</h2>
+            <p>Wanna explore my collection of photos?</p>
+            <button class="ok-btn" onclick="closeWelcomeModal()">YES</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
